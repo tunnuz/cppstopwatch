@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with Stopwatch.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "stdafx.h"
+#include "Stdafx.h"
 
 #ifndef WIN32
 	#include <sys/time.h>
@@ -238,6 +238,19 @@ void Stopwatch::report(string perf_name, std::ostream& output) {
 	output << "  *  Stops " << stops.str() << std::endl;
 	output << std::endl;
 	
+}
+
+long double Stopwatch::get_time_so_far(string perf_name) {
+    // Try to recover performance data
+	if ( !performance_exists(perf_name)  )
+		throw StopwatchException("Performance not initialized.");
+    
+    long double lapse = (take_time() - (records_of->find(perf_name)->second).clock_start);
+    
+    if (mode == CPU_TIME)
+        lapse /= (double) CLOCKS_PER_SEC;
+    
+	return lapse;
 }
 
 long double Stopwatch::get_total_time(string perf_name) {

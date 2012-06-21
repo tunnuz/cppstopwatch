@@ -19,7 +19,7 @@ along with Stopwatch.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef STOPWATCH_H
 #define STOPWATCH_H
 
-#include "stdafx.h"
+#include "Stdafx.h"
 
 #ifndef WIN32
 	/* The classes below are exported */
@@ -172,6 +172,9 @@ public:
 
 	/** Return last measurement of a certain performance */
 	long double get_last_time(std::string perf_name);
+    
+    /** Return the time since the start of the last measurement of a given performance. */
+    long double get_time_so_far(std::string perf_name);
 
 	/**	Turn off clock, all the Stopwatch::* methods return without doing anything after this method is called. */
 	void turn_off();
@@ -179,6 +182,9 @@ public:
 	/** Turn on clock, restore clock operativity after a turn_off(). */
 	void turn_on();
 	
+	/** Take time, depends on mode */
+	long double take_time();
+    
 protected:
 
 	/** Struct to hold the performance data */
@@ -215,9 +221,6 @@ protected:
 		/** How many cycles have been this stopwatch executed? */
 		int	stops;
 	};
-
-	/** Take time, depends on mode */
-	long double take_time();
 
 	/** Time taking mode */
 	StopwatchMode mode;
